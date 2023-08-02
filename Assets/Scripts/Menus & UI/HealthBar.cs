@@ -15,6 +15,6 @@ public class HealthBar : MonoBehaviour
 
         HpBar.SetValueWithoutNotify(Health);
 
-        number.text = Health.ToString();
+        //number.text = Health.ToString();
     }
 }

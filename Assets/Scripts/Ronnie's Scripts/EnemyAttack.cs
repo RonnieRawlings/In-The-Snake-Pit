@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
-public class EnemyAttack : Health
+public class EnemyAttack : MonoBehaviour
 {
     // Fields changeable in the inspector, testing purposes.
     [SerializeField]
@@ -64,7 +64,7 @@ public class EnemyAttack : Health
 
         target.takeHealth(15); // Removes health from player.
         soundManager.GetComponent<SoundManager>().Play(soundManager.GetComponent<SoundManager>().sounds
-            [Random.RandomRange(12, 14)].name); // Plays related sfx.
+            [Random.Range(12, 14)].name); // Plays related sfx.
 
         yield return new WaitForSeconds(2.0f); // Waits before allowing another attack to begin.
         coroutineNotStarted = true; // Allows new coroutine to begin.

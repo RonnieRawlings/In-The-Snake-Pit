@@ -51,25 +51,37 @@ public class Health : MonoBehaviour
     public void Start()
     {
         resetHealth();
-        healthValueText.text = currentHealth.ToString() + "/" + baseHealth.ToString();
+        item = gameObject;
+
+        // Only set visual health if item is player.
+        if (item.name == "Player")
+        {
+            healthValueText.text = currentHealth.ToString() + "/" + baseHealth.ToString();
+        }              
     }
+
     public void Update()
     {
+        // Destroies obj if health is 0 or less.
         if (currentHealth <= 0)
         {
             GameObject.Find("EventSystem").GetComponent<ThumbConditions>().KillCount += 1;
             Destroy(item);
         }
-        //baseHealth = Upgrades.Health;
-        healthValueText.text = currentHealth.ToString() + "/" + baseHealth.ToString();
 
-        healthBar.maxValue = baseHealth;
-
-        if (currentHealth <= 30)
+        // Only updates health visually if player.
+        if (item.name != "Enemy")
+        {
+            healthValueText.text = currentHealth.ToString() + "/" + baseHealth.ToString();
+            healthBar.maxValue = baseHealth;
+        }
+        
+        // Enables vignette if health is low enough, ignores if not player.
+        if (currentHealth <= 30 && item.name != "Enemy")
         {
             postVolume.enabled = true;
         }
-        else
+        else if (item.name != "Enemy")
         {
             postVolume.enabled = false;
         }
