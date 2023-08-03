@@ -7,7 +7,13 @@ using UnityEngine.EventSystems;
 
 public class ControllerMenuSelection : MonoBehaviour
 {
-    public GameObject mainMenu; // Holds MainMenu Canvas Obj.
+    public GameObject activeMenu; // Holds the currently active menu.
+
+    /// <summary> method <c>UpdateActiveMenu</c> Allows buttons to change the active menu var, prevents controller issues. </summary>
+    public void UpdateActiveMenu(GameObject newActiveMenu)
+    {
+        activeMenu = newActiveMenu;
+    }
 
     /// <summary> method <c>ChangeMenu</c> Changes which button starts selected on current menu. </summary>
     public void ChangeMenu(GameObject changeMenu)
@@ -18,6 +24,14 @@ public class ControllerMenuSelection : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangeMenu(mainMenu);
+        ChangeMenu(activeMenu);
+    }
+
+    private void Update()
+    {
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            ChangeMenu(activeMenu);
+        }
     }
 }
