@@ -37,9 +37,15 @@ public class SwordCombat : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            if (other.GetComponent<Health>() == null) { return; }
+
             other.GetComponent<Health>().takeHealth(attackDamage);
             soundManager.GetComponent<SoundManager>().Play(soundManager.GetComponent<SoundManager>().sounds[3].name);
-            StartCoroutine(other.GetComponent<EnemyAttack>().KnockBack());
+
+            if (other.GetComponent<EnemyAttack>() != null)
+            {
+                StartCoroutine(other.GetComponent<EnemyAttack>().KnockBack());
+            }           
         }
 
         if (other.CompareTag("Health"))

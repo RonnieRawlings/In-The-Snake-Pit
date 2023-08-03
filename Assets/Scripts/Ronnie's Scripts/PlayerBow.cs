@@ -93,7 +93,7 @@ public class PlayerBow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) || Input.GetButtonDown("Jump") && !coroutineCalled)
         {
             bowTarget.enabled = true;
-            playerAnim.Play("bow");
+            //playerAnim.Play("bow");
             playerAnim.Play("Bowmove");
         }
 

@@ -87,7 +87,8 @@ public class EnemyPathing : MonoBehaviour
     // Called when obj is removed from scene.
     private void OnDestroy()
     {
-        Destroy(moveSpot.gameObject); // Destorys the related movespot, stops obj clutter.
+        // Destorys the related movespot, stops obj clutter.
+        if (moveSpot.gameObject != null) { Destroy(moveSpot.gameObject); }         
     }
 
     /// <summary> interface <c>PlayerHitSound</c> Plays sfx when an attack is landed. </summary>

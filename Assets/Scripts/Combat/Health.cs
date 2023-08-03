@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -82,7 +83,7 @@ public class Health : MonoBehaviour
         {
             postVolume.enabled = true;
         }
-        else if (item.name != "Enemy")
+        else if (item.name != "Enemy" && SceneManager.GetActiveScene().name != "Tutorial")
         {
             postVolume.enabled = false;
         }

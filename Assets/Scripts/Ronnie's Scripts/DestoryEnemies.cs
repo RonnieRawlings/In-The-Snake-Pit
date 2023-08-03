@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DestoryEnemies : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class DestoryEnemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Prevents tutorial level enemy errors.
+        if (SceneManager.GetActiveScene().name == "Tutorial") { return; }
+
         roundTimer = GameObject.Find("UICanvas").GetComponent<timer>().currentTime; // Finds the roundTimer.
 
         if (roundTimer <= 0)
