@@ -19,13 +19,20 @@ public class RandLayout : MonoBehaviour
     private GameObject currentLayout;
 
     public TopDownMovement playerMovement; // Gets players movement script.
+
+    [SerializeField] GameObject powerUpPanel;
     
     /// <summary> method <c>PickLayoutObj</c> Randomly selects a layout obj to be used. </summary>
     public void PickLayoutPrefab()
     {
-        randomLayout = Random.Range(0, arenaLayouts.Count); // Gens rand num between 0 & length of given list.
-        var loadPrefab = Resources.Load("Prefabs/Layouts/" + arenaLayouts[randomLayout]) as GameObject; // Adds layout obj to scene.
-        currentLayout = GameObject.Instantiate(loadPrefab, loadPrefab.transform.position, loadPrefab.transform.rotation); // Instantiates the obj.
+        // Chooses random layout, instantiates it into the arena.
+        randomLayout = Random.Range(0, arenaLayouts.Count);
+        var loadPrefab = Resources.Load("Prefabs/Layouts/" + arenaLayouts[randomLayout]) as GameObject;
+        currentLayout = GameObject.Instantiate(loadPrefab, loadPrefab.transform.position, loadPrefab.transform.rotation);
+
+        // Updates the navmesh area around new layout + updates player spawn.
+        playerMovement.SetSpawn();
+        navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);        
     }
 
     /// <summary> method <c>DeactivateObj</c> Deactivates every layout obj, this stops layout overlapping issues. </summary>
@@ -45,52 +52,12 @@ public class RandLayout : MonoBehaviour
         Destroy(GameObject.Find("Layout " + actualLayout.ToString() + "(Clone)")); // Removes current layout.
     }
 
-    /// <summary> interface <c>WaitForSeconds</c> Waits a set time, useful for tesing certain functions. </summary>
-    IEnumerator WaitForSeconds()
-    {
-        // Keeps coroutine running until roundTimer ends.
-        while (roundTimer >= 0)
-        {            
-            yield return new WaitForEndOfFrame(); // Waits until current frame ends.
-        }
-       
-        RemoveLayout(); // Calls this method.
-        layoutRemoved = true; // Script now knows layout is gone.        
-    }
-
     // Called before Start.
     private void OnEnable()
     {
+        // Adds all layouts to list + loads one into the arena.
         arenaLayouts = new List<string>() { "Layout 1", "Layout 2", "Layout 3", "Layout 4", "Layout 5", "Layout 6",
             "Layout 7", "Layout 8", "Layout 9", "Layout 10"};
-
-        PickLayoutPrefab(); // Calls this method.
-        navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
-    }
-
-    // Called once before first frame.
-    private void Start()
-    {
-        roundTimer = GameObject.Find("UICanvas").GetComponent<timer>().currentTime; // Finds the roundTimer.
-        StartCoroutine(WaitForSeconds()); // Starts a coroutine meant to remove the current layout.
-    }
-
-    // Called once each frame.
-    private void Update()
-    {
-        roundTimer = GameObject.Find("UICanvas").GetComponent<timer>().currentTime; // Finds the roundTimer.
-
-        // Checks if layout is gone.
-        if (layoutRemoved)
-        {
-            RemoveLayout(); // Makes sure layout is acc gone.
-            PickLayoutPrefab(); // Calls method, loads new rand layout.
-
-            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
-
-            layoutRemoved = false; // New layout in scene.
-            playerMovement.SetSpawn(); // Resets players spawn for new layout.  
-            StartCoroutine(WaitForSeconds()); // Calls coroutine, checks when round ends.                 
-        }
+        PickLayoutPrefab();
     }
 }

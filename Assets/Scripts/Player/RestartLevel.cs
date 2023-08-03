@@ -13,5 +13,4 @@ public class RestartLevel : MonoBehaviour
             SceneManager.LoadScene(CurrentScene);
         }
     }
-
 }

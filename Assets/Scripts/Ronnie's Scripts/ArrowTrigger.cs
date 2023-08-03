@@ -23,9 +23,15 @@ public class ArrowTrigger : MonoBehaviour
             // Checks whether the collision is with an enemy.
             if (other.CompareTag("Enemy"))
             {
+                if (other.GetComponent<Health>() == null) { return; }
+
                 soundManager.Play(soundManager.sounds[3].name);
                 other.GetComponent<Health>().takeHealth(attDamage); // Removes health from the enemy, half it's health.
-                StartCoroutine(other.GetComponent<EnemyAttack>().KnockBack());
+
+                if (other.GetComponent<EnemyAttack>() != null)
+                {
+                    StartCoroutine(other.GetComponent<EnemyAttack>().KnockBack());
+                }
             }
         }     
     }

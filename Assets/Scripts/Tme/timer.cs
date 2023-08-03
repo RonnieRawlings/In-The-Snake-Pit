@@ -25,6 +25,8 @@ public class timer : MonoBehaviour
 
     public Text waveCounterText;
 
+    [SerializeField] private RandLayout rlScript;
+
     private void Start()
     {
         //txt.text = "0";
@@ -55,6 +57,11 @@ public class timer : MonoBehaviour
             hasTriggered = true;
             //do our thing......
             upgradeScreen.SetActive(true);
+
+            // Change layout.
+            rlScript.RemoveLayout();
+            rlScript.PickLayoutPrefab();
+            
             audioManager.GetComponent<AudioManager>().sounds[0].source.Stop();
             audioManager.GetComponent<AudioManager>().sounds[1].source.Stop();
             audioManager.GetComponent<AudioManager>().sounds[2].source.Stop();
