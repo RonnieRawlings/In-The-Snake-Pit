@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine;
+using TMPro;
 
 public class Health : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Health : MonoBehaviour
     public float baseHealth;
     public float currentHealth;
     public GameObject item;
-    public Text healthValueText;
+    public TextMeshProUGUI healthValueText;
     public Slider healthBar;
 
     public Volume postVolume;
